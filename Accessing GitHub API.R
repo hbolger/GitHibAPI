@@ -33,4 +33,33 @@ gitDF = jsonlite::fromJSON(jsonlite::toJSON(json1))
 gitDF[gitDF$full_name == "jtleek/datasharing", "created_at"] 
 
 
+str(gitDF)
+gitDF$created_at
+gitDF$teams_url
+
+
+##############
+
+
+#My GitHub account is fairly limited as I have not used it extensively throughout the year
+
+#Preparing data for Rozenn Dahyot           
+rdreq = GET("https://api.github.com/users/roznn", gtoken)
+rdreqContent = content(rdreq)
+rdfollowers = GET("https://api.github.com/users/roznn/followers", gtoken)
+rdfollowersContent = content(rdfollowers)
+rdrepos = GET("https://api.github.com/users/roznn/repos", gtoken)
+rdreposContent = content(rdrepos)
+
+#Translate all into data frames:
+reqDisplay = jsonlite::fromJSON(jsonlite::toJSON(rdreqContent))
+reqDisplay$
+followersDisplay = jsonlite::fromJSON(jsonlite::toJSON(rdfollowersContent))
+reposDisplay = jsonlite::fromJSON(jsonlite::toJSON(rdreposContent))
+
+reqDisplay
+followersDisplay
+reposDisplay
+
+
 
