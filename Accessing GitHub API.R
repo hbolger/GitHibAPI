@@ -206,3 +206,87 @@ year_ex2008
 plot(year_ex2008[,c(4,3)], col = year_ex2008[,5], xlim = c(0,100), ylim = c(0,400),
      main = 'Relationship between repos and followers excluding year 2008')
 
+
+
+
+# Looking into Andrew Nesbitt Repos
+size = adrepos$size
+watchers = adrepos$watchers
+createdAt = substr(adrepos$created_at, start = 1, stop = 4)
+repo_name = adrepos$name
+language = adrepos$language
+
+# New Data Frame for Storing Data on Andrew's Repos
+AndrewNesbitt.DF <- data.frame(
+  name = integer(),
+  language = integer(),
+  createdAt = integer(),
+  watchers = integer(),
+  size = integer())
+
+for (i in 1:length(repo_name)) {
+  
+    repo_nameI = repo_name[[i]]
+    languageI = language[[i]]
+    createdAtI = createdAt[[i]]
+    watchersI = watchers[[i]]
+    sizeI = size[[i]]
+    
+    if (length(languageI) == 0){
+      AndrewNesbitt.DF[nrow(AndrewNesbitt.DF) + 1, ] = c(repo_nameI, "NA", createdAtI, watchersI, sizeI)
+    }
+    
+    else {
+      AndrewNesbitt.DF[nrow(AndrewNesbitt.DF) + 1, ] = c(repo_nameI, languageI, createdAtI, watchersI, sizeI)
+      
+    }
+    
+}
+
+head(AndrewNesbitt.DF)
+# Plot Year to language
+AndrewNesbitt.DF[,2]
+min(AndrewNesbitt.DF[,3]) 
+max(AndrewNesbitt.DF[,3]) 
+
+
+language_list = c('JavaScript', 'NA', 'Ruby', 'CoffeeScript', 'Go', 'CSS', ' HTML', 'Pearl',
+                  'Objective-C', 'Shell', 'Python')
+
+# Language Usage
+plot(table(AndrewNesbitt.DF[,2]), ylab = "Count", main = 'Language Usage')
+
+# Yearly Activity
+plot(table(AndrewNesbitt.DF[,3]), ylab = "Count", main = 'Yearly Activity')
+
+# Yearly Activity to Laguage Used
+table(AndrewNesbitt.DF[,2:3])
+
+observed = AndrewNesbitt.DF[as.integer(AndrewNesbitt.DF$watchers) > 22,]
+observed
+mean(as.integer(observed$size))
+(AndrewNesbitt.DF$watchers)
+
+y = array()
+
+for (i in 0:23) {
+  
+  observed = AndrewNesbitt.DF[as.integer(AndrewNesbitt.DF$watchers) >= i,]
+  y = c(y, mean(as.integer(observed$size)))
+  i = i + 1
+  
+}
+y
+
+plot(y, ylab = 'Average Repo Size', xlab = 'Minimum Number of Watchers per Repository',
+     main = 'Size Effect on Number of Watchers')
+abline(h = c(median(as.integer(AndrewNesbitt.DF$size))), 
+       col = c('blue'), lty = 1, lwd = 1)
+
+
+
+
+users.DF
+AndrewNesbitt.DF
+
+
