@@ -128,3 +128,56 @@ languages
 
 followerList = adfollowers$login
 followerList = c(followerList)
+
+
+# Create a data frame to store an array of multiple user's data
+# The users will be found by looping through andrew nesbitt's followers
+users = c()
+users.DF = data.frame(
+  username = integer(),
+  following = integer(),
+  followers = integer(),
+  repos = integer(),
+  dateCreated = integer())
+
+# Loop Through Followers to Build users.DF 
+for (i in 1:length(followerList)) 
+{
+  
+  followersfollowings = following(followerList[i])
+  followersfollowings = followersfollowings$login
+  
+  for (j in 1:length(followersfollowings))
+  {
+    
+    if (!(is.element(followersfollowings[j], users)))
+    {
+    
+      users[length(users)+1] = followersfollowings[j]
+      followersfollowings2 = user(followersfollowings[j])
+      
+      followersfollowings2_following = followersfollowings2$following
+      followersfollowings2_followers = followersfollowings2$followers
+      followersfollowings2_repos = followersfollowings2$public_repos
+      followersfollowings2_dateCreated = substr(followersfollowings2$created_at, start = 1, stop = 4)
+      
+      users.DF[nrow(users.DF) + 1, ] = c(followersfollowings[j], followersfollowings2_following, 
+                                         followersfollowings2_followers, followersfollowings2_repos,
+                                         followersfollowings2_dateCreated)
+    
+    }
+    if (length(users) >= 200){
+      break
+    }
+    next
+    
+  }
+  
+  if(length(users) >= 200){
+    break
+  }
+  next
+  
+}
+users.DF
+length(users)
