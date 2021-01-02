@@ -62,4 +62,50 @@ followersDisplay
 reposDisplay
 
 
+# --------------------- Interrogation ------------------------------------
+# Create Functions For Storing Multiple Git User Details
+user <- function(name)
+{
+  
+  req = GET(paste("https://api.github.com/users/", name, "", sep = ""), gtoken)
+  reqContent = content(req)
+  reqDisplay = jsonlite::fromJSON(jsonlite::toJSON(reqContent))
+  return(reqDisplay)
+  
+}
+
+
+followers <- function(name)
+{
+  
+  followers = GET(paste("https://api.github.com/users/", name, "/followers?per_page=100", sep = ""), gtoken)
+  followersContent = content(followers)
+  followersDisplay = jsonlite::fromJSON(jsonlite::toJSON(followersContent))
+  return(followersDisplay)
+  
+}
+
+
+following <- function(name)
+{
+  
+  following = GET(paste("https://api.github.com/users/", name, "/following?per_page=100", sep = ""), gtoken)
+  followingContent = content(following)
+  followingDisplay = jsonlite::fromJSON(jsonlite::toJSON(followingContent))
+  return(followingDisplay)
+  
+}
+
+
+repos <- function(name)
+{
+  
+  repos = GET(paste("https://api.github.com/users/", name, "/repos?per_page=150", sep = ""), gtoken)
+  reposContent = content(repos)
+  reposDisplay = jsonlite::fromJSON(jsonlite::toJSON(reposContent))
+  return(reposDisplay)
+  
+}
+
+
 
