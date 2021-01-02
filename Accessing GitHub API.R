@@ -181,3 +181,28 @@ for (i in 1:length(followerList))
 }
 users.DF
 length(users)
+
+
+table(users.DF$dateCreated)
+
+users.DF_followerTofollowing_relationship <- users.DF[,2:3]
+plot(users.DF_followerfollowing_relationship, xlim = c(0,300), ylim = c(0,4000), 
+     main = "Relationship between user's followers and followings")
+plot(users.DF_followerfollowing_relationship, xlim = c(0,150), ylim = c(0,1000), col = users.DF[,5],
+     main = "In Focus Relationship between user's followers and followings coloured by year")
+
+
+palette("default")
+users.DF_reposTofollowers_relationship <- users.DF[,c(4,3)]
+plot(users.DF_reposTofollowers_relationship, xlim = c(0,250), ylim = c(0,5000),
+     main = "Relationship between number of repos to number of followers")
+plot(users.DF_reposTofollowers_relationship, xlim = c(0,250), ylim = c(0,1000), col = users.DF[,5],
+     main = "In Focus Relationship between number of repos to number of followers coloured by year")
+
+
+year_ex2008 = users.DF[users.DF[,5] != 2008,]
+year_ex2008
+
+plot(year_ex2008[,c(4,3)], col = year_ex2008[,5], xlim = c(0,100), ylim = c(0,400),
+     main = 'Relationship between repos and followers excluding year 2008')
+
