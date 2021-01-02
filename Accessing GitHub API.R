@@ -108,4 +108,23 @@ repos <- function(name)
 }
 
 
+# Acquire Details for Andrew Nesbitt
+adreq = user("andrew")
+adfollowers = followers("andrew")
+adfollowing = following("andrew")
+adrepos = repos("andrew")
 
+# Look At Data Returned For Reference
+adreq
+adfollowers$login
+adfollowing$login
+dim(adrepos)
+adrepos$size
+adrepos$created_at
+adrepos$language
+
+languages <- c(adrepos$language)
+languages
+
+followerList = adfollowers$login
+followerList = c(followerList)
